@@ -8,8 +8,15 @@ int main (void)
 	scanf("%d",&sum);
 	printf("Enter percents: ");
 	scanf("%f",&p);
-	result=sum+((sum/100*p)*5);
-		printf("Result 5y =%d \n",result);
-	system("pause");
-	return 0;
+
+	for(int t=0; t<=5; )
+	{
+	result=sum+(sum/100*p);
+	t++;
+	}
+	printf("result",result);
+	system ("pause");
+	//Проблемы с переменной в которой хранится сумма каждый год,к ней должный суммироватся проценты и от нее расчитываться.
+
+
 }
