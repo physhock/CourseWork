@@ -22,20 +22,23 @@ int main (void)
 
 
 	if (a<p)
-		printf("Not enough space");
+		printf("Not enough space\n");
 	else if (b<q)
-		printf("Not enough space");
+		printf("Not enough space\n");
 
 
 
 	if (a<r)
-		printf("Not enough space");
+		printf("Not enough space\n");
 	else if (b<s)
-		printf("Not enough space");
+		printf("Not enough space\n");
+
+	if(sq<(sq1+sq2))
+		printf("Not enough space\n");
+	else
+printf("Its OK\n");
 
 
 
-
-printf("Its OK");
 system("pause");
 }

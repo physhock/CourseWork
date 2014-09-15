@@ -3,20 +3,20 @@
 int main (void)
 {
 	int result,sum;
-	float p;
+	float z,y,p;
 	printf("Enter sum: ");
 	scanf("%d",&sum);
 	printf("Enter percents: ");
 	scanf("%f",&p);
+	z=sum;
+	y=0;
 
-	for(int t=0; t<=5; )
+	for (int t=0 ; t<=5;)
 	{
-	result=sum+(sum/100*p);
+		result=((z/100)*p);
+        z=z+result;   
 	t++;
 	}
-	printf("result",result);
+	printf("rusult %f \n",z);
 	system ("pause");
-	//Проблемы с переменной в которой хранится сумма каждый год,к ней должный суммироватся проценты и от нее расчитываться.
-
-
 }
