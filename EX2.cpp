@@ -26,17 +26,24 @@ int main (void)
 	else if (b<q)
 		printf("Not enough space\n");
 
-
-
 	if (a<r)
 		printf("Not enough space\n");
 	else if (b<s)
 		printf("Not enough space\n");
 
-	if(sq<(sq1+sq2))
-		printf("Not enough space\n");
+
+
+	if(p+r>a && s+r<b)
+		printf("Doma sprava ili sleva\n");
 	else
-printf("Its OK\n");
+		printf("Doma sverxy ili snizy");
+
+
+//	if(sq<(sq1+sq2))
+	//	printf("Not enough space\n");
+	//else
+//printf("Its OK\n");
+	//
 
 
 
