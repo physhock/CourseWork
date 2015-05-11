@@ -3,13 +3,28 @@
 #include <iostream>
 #include <string>
 
-template<class T>
 
-class Queue
+
+template <class T> 
+class IQueue 
 {
-
 public:
-	Queue():head(0), tail(0) {} //Constructor 
+// добавить в хвост
+virtual void put(const T& elem) = 0;
+// взять из головы
+virtual T take() = 0;
+// получить элемент по номеру 0...size-1,
+// 0 это голова, size-1 это хвост
+virtual T get(int i) const = 0;
+// узнать размер очереди
+virtual int size() const = 0;
+};
+
+template<class T>
+class Queue:
+	public IQueue<T>
+{
+	Queue():head(0), tail(0), count(0) {} //Constructor 
  
     ~Queue() //Destructor
         {
@@ -20,10 +35,10 @@ public:
                  head=tail;
              }
         }	
- 
-        void enqueue(T val) //Add element
+
+        void put(T val) //Add element
         {
-                Node* Temp=new Node;
+                Node *Temp=new Node;
                 Temp->elem=val;
                 if(head==0)
                 {
@@ -33,52 +48,35 @@ public:
                 }
                 tail->next=Temp;
                 tail=Temp;
+				size ++;
         }
  
-        void dequeue() //Delete element
+        void take() //Delete element
         {
-                if (empty())
-                {
-                        throw std::string("Queue is empty");
-                }
-                Node* delPtr=head;
-                std::cout<<"Element "<< head->elem <<" is deleted from the queue\n";
+                Node *delPtr=head;
                 head=head->next;
                 delete delPtr;
         }
  
-        const T& front() const //Taking first el
-        {
-                if (empty())
-                {
-                        throw std::string("Queue is empty");
-                }
-                return head->elem;
-        }
-		 const T& back() const //Taking last one
-        {
-                if (empty())
-                {
-                        throw std::string("Queue is empty");
-                }
-                return tail->elem;
-        }
- 
-        void print() const //Printing queue
-        {
-                if (empty())
-                {
-                        throw std::string("Queue is empty");
-                }
-                for(Node* ptr=head; ptr!=0; ptr=ptr -> next)
-                        std::cout << ptr -> elem << ' ';
-                std::cout << '\n';
-        }
- 
-        bool empty() const //Check que 
+		const T& get(int i) const
+		{
+			if (i > count)
+				return tail->elem;
+			else
+				return head->elem;
+		}
+
+		int size() const
+		{
+			return (count+1);
+		}
+
+		bool empty() const //Check que 
         {
                 return head==0;
         }
+
+ 
 private:
         struct Node // Making struct 4 list
         {
@@ -89,5 +87,7 @@ private:
 
         Node *head;
         Node *tail;
+		int count;
+		
 
 };
