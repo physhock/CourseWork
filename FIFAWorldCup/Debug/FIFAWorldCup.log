@@ -1,9 +1,10 @@
-﻿Build started 11.05.2015 18:30:02.
+﻿Build started 11.05.2015 20:50:52.
      1>Project "C:\GIT\FIFAWorldCup\FIFAWorldCup.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp TournamentTable.cpp
          Main.cpp
-     1>c:\git\fifaworldcup\tournamenttable.h(62): warning C4101: 'l' : unreferenced local variable
+     1>c:\git\fifaworldcup\tournamenttable.h(61): warning C4101: 'l' : unreferenced local variable
+     1>c:\git\fifaworldcup\tournamenttable.h(182): warning C4018: '<' : signed/unsigned mismatch
          Generating Code...
          Skipping... (no relevant changes detected)
          TournamentTable.cpp
@@ -15,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.08
+Time Elapsed 00:00:01.12

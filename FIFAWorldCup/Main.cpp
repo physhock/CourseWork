@@ -39,6 +39,7 @@ int main()
 
 	TournamentTable r;
 	r.createTable();
+	r.saveFunc();
 	system("pause");
 
 }

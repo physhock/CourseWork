@@ -28,7 +28,6 @@ class TournamentTable
 	
 	TournamentTable():TableString(0) {};
     ~TournamentTable() {};
-	friend int main();
 	Team  setData() //Procedyra zapolneniya
 {
   std::cout<<"Enter Team name: ";
@@ -143,6 +142,7 @@ class TournamentTable
 	*/
 	 void simulationGame() //Procedyra igri
 	{
+		Team g;
 		int t1,t2,res;
 		t1 = 0;
 		t2 = 0;
@@ -153,16 +153,38 @@ class TournamentTable
 		std::cout<<"Enter 2 team played(0...n): ";
 		std::cin>>t2;
 		std::cout<<"\n";
-        std::cout<<"Who won?(0....n)";
+        std::cout<<"Who won?(0....n): ";
 		std::cin>>res;
-		if (res=t1)
+		if (res!=t2)
 		{
-			
+			g = TableString[t1];
+			g.Win++;
+			//g.GoalsFor = g.GoalsFor + ga;
+			//g.GoalsAgainst = g.GoalsAgainst + ga;
+			TableString[t1] = g;
+			sort(TableString);
+		}
+		else
+		{
+			g = TableString[t2];
+			g.Win++;
+			//g.GoalsFor = g.GoalsFor + ga;
+			//g.GoalsAgainst = g.GoalsAgainst + ga;
+			TableString[t2] = g;
+			sort(TableString);
 		}
 
 
 	}
 	
+	 void saveFunc()
+	 {
+		 for (int i = 0; i < TableString.size(); i++)
+		 {
+			 r = TableString[i];
+			 std::cout<<"Mesto:"<<(i+1)<<"  "<<r.name<<" Played:"<<r.Played<<" Points:"<<r.Points<<"\n";
+		 }
+	 }
 
 	
 };
