@@ -18,11 +18,14 @@
     <ClInclude Include="TournamentTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayOff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TournamentTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
