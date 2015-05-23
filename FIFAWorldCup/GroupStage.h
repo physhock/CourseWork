@@ -7,7 +7,7 @@
 
 std::vector<Team> qualTop;//First teams table
 
-std::vector<Team> qualSec;//Second place teams
+                   
 
 class Qualification
 {
@@ -23,9 +23,9 @@ class Qualification
 
 	std::vector<Team> fillGroup()
 	{
-		QualificationGroup.resize(4);
+		QualificationGroup.resize(2);//4
 		
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 2; i++)//4
 		{
 			enterData();
 			QualificationGroup[i] = r;
@@ -37,9 +37,9 @@ class Qualification
 
 	void fillTable()
 	{
-		QualificationTable.resize(3);//8
+		QualificationTable.resize(2);//8
 
-		for (int i = 0; i < 3; i++)//8
+		for (int i = 0; i < 2; i++)//8
 		{
 			fillGroup();
 			QualificationTable[i] = QualificationGroup;
@@ -64,7 +64,7 @@ class Qualification
 	void groupPlay(int n)//Prinimaet nomer grypu v kotory igra
 	{
 
-		 *loadTable() = QualificationTable[n]; //Теперь группа у нас в Table
+		 *loadTable() = QualificationTable[n]; //Catch group -> Table
 		 simulationGame();
 		 QualificationTable[n] = *loadTable();
 	}

@@ -20,7 +20,7 @@ int main()
 	r.printFunc();*/
 	Qualification q;
 	q.fillTable();
-	q.groupPlay(2);
+	q.groupPlay(1);
 	system("pause");
 
 }
