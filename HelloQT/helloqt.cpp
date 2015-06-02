@@ -1,5 +1,6 @@
 #include <QMessageBox>
 #include <QDebug>
+#include <QSettings>
 #include "helloqt.h"
 
 
@@ -15,6 +16,7 @@ const QString points = "points";
 const QString score = "score";
 QStringList fields;
 QStringList allGroups;
+
 
 
 
@@ -40,6 +42,8 @@ HelloQT::HelloQT(QWidget *parent)
 	connect ( ui.startSimulationPlayOffStage14Button, SIGNAL(clicked()), this, SLOT (slotStartSimulationPlayOffStage14Button()) );
 	connect ( ui.startSimulationPlayOffStage12Button, SIGNAL(clicked()), this, SLOT (slotStartSimulationPlayOffStage12Button()) );
 	connect ( ui.startSimulationPlayOffStage11Button, SIGNAL(clicked()), this, SLOT (slotStartSimulationPlayOffStage11Button()) );
+	connect ( ui.saveTeamsButton, SIGNAL(clicked()), this, SLOT (slotSaveTeamsButton()) );
+	connect ( ui.loadTeamsButton, SIGNAL(clicked()), this, SLOT (slotLoadTeamsButton()) );
 
 
 	foreach (QLineEdit* le, this->findChildren<QLineEdit*>(QRegularExpression("score*")) )
@@ -162,6 +166,29 @@ Group HelloQT::getGroupData(int group)
 	return g;
 }
 
+QList<TeamData> HelloQT::getGroupData()
+{
+	QList<TeamData> group;
+
+	for (int g = 0; g < maxGroup; g++)
+	{
+
+	
+	for(int i = 0; i < maxRowsInGroup; ++i)
+	{
+		TeamData r;
+		r.name = getFieldValue(g,i, teamName);
+		r.gamesCount = getFieldValue(g,i, gamesPlayed ).toShort();
+		r.ballsDiff = getFieldValue(g,i, ballsDiff ).toShort();
+		r.points = getFieldValue(g,i, points ).toShort();
+		group << r;
+	}
+
+	}
+
+	return group;
+}
+
 void HelloQT::setGroupData(int group,Group data)
 {
 	for(int i = 0; i < maxRowsInGroup; ++i)
@@ -172,6 +199,28 @@ void HelloQT::setGroupData(int group,Group data)
 		setFieldValue(group,i, points,data[i].points);
 
 	}
+}
+ 
+void HelloQT::setAllGroupData(QList<TeamData> data)
+{
+
+	std::map<int, std::vector<TeamData>> allTeams = splitTeams(data);;
+	for ( int i=0; i < maxGroup; ++i)
+	{
+		setGroupData(i,allTeams[i]);
+	}	
+}
+
+std::map<int, std::vector<TeamData>> HelloQT::splitTeams(QList<TeamData> data)
+{
+	std::map<int, std::vector<TeamData>> teamsMap;
+
+	for ( int i =0; i < data.size(); ++i )
+	{
+		size_t groupIndex =  i/maxRowsInGroup;
+		teamsMap[groupIndex].push_back(data[i]);
+	}
+	return teamsMap;
 }
 
 void HelloQT::slotStartSimulationButtonHandler()
@@ -696,4 +745,50 @@ void HelloQT::goToPlayOff()
 			setFieldValue(QString("%1_%2_%3%4").arg(teamName).arg(18).arg(7).arg(0),getFieldValue(QString("%1_%2%3").arg(teamName).arg(7).arg(0)));
 			setFieldValue(QString("%1_%2_%3%4").arg(teamName).arg(18).arg(7).arg(1),getFieldValue(QString("%1_%2%3").arg(teamName).arg(6).arg(1)));
 	
+}
+
+
+
+void HelloQT::slotSaveTeamsButton()
+{	
+	QString iniName = QCoreApplication::applicationDirPath() + "/" + QCoreApplication::applicationName() + ".ini" ;
+	QSettings settings(iniName, QSettings::Format::IniFormat);
+	QList<TeamData> teams;
+	teams = getGroupData();
+	settings.remove("TeamsGroupData");
+	settings.beginGroup("TeamsGroupData");
+	settings.beginWriteArray("teams");
+	for (int i = 0; i < teams.size(); ++i)
+	{
+		settings.setArrayIndex(i);
+		settings.setValue("name", teams.at(i).name);
+		settings.setValue("gamesCount", teams.at(i).gamesCount);
+		settings.setValue("ballsDiff", teams.at(i).ballsDiff);
+		settings.setValue("points", teams.at(i).points);
+	}
+	settings.endArray();
+	settings.endGroup();
+}
+
+void HelloQT::slotLoadTeamsButton()
+{
+	QString iniName = QCoreApplication::applicationDirPath() + "/" + QCoreApplication::applicationName() + ".ini" ;
+	QSettings settings(iniName, QSettings::Format::IniFormat);
+	settings.beginGroup("TeamsGroupData");
+	TeamData r;
+	QList<TeamData> teams;
+	int size = settings.beginReadArray("teams");
+	for (int i = 0; i < size; ++i)//?????????????????size || teams.size()
+	{
+		settings.setArrayIndex(i);
+		TeamData r;		
+		r.name = settings.value("name").toString();
+		r.gamesCount = settings.value("gamesCount").toInt();
+		r.ballsDiff = settings.value("ballsDiff").toInt();
+		r.points = settings.value("points").toInt();
+		teams.push_back(r);
+	}
+	settings.endArray();
+	settings.endGroup();
+	setAllGroupData(teams);
 }
